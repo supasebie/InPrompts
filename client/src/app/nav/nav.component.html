@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand" routerLink="/" routerLinkActive="active">InPrompts</a>
 
-    <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountSerivce.currentUser$ | async">
+    <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accountService.currentUser$ | async">
       <li class="nav-item">
         <a class="nav-link" routerLink="/members" routerLinkActive="active">Friends</a>
       </li>
@@ -17,15 +17,15 @@
       </li>
     </ul>
 
-    <div class="dropdown" *ngIf="accountSerivce.currentUser$ | async" dropdown>
-      <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome user</a>
-      <div class="dropdown-menu" *dropdownMenu>
+    <div ngbDropdown class="dropdown" *ngIf="accountService.currentUser$ | async">
+      <a ngbDropdownToggle id="dropdownBasic1" class="dropdown-toggle text-light text-decoration-none">Welcome {{accountService.currentUser()?.username !== 'undefined' ? (accountService.currentUser()?.username | titlecase) : ''}}</a>
+      <div class="dropdown-menu" ngbDropdownMenu>
         <div class="dropdown-item">Edit Profile</div>
         <div class="dropdown-item" (click)="logout()">Logout</div>
       </div>
     </div>
 
-    <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accountSerivce.currentUser$ | async)">
+    <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off" *ngIf="!(accountService.currentUser$ | async)">
       <input
         name="username"
         [(ngModel)]="model.username"

@@ -10,7 +10,7 @@ import { UserRegister } from '../_models/userRegister';
 export class HomeComponent {
   registerMode = false;
 
-  constructor() {}
+  constructor(public accountService: AccountService) {}
 
   registerToggle() {
     this.registerMode = !this.registerMode;

@@ -1,5 +1,8 @@
 <div class="container mt-5">
-  <div style="text-align: center" *ngIf="!registerMode">
+  <div
+    style="text-align: center"
+    *ngIf="!registerMode && accountService.currentUser()?.username == undefined"
+  >
     <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
       Register
     </button>
@@ -12,6 +15,51 @@
           (cancelRegister)="cancelRegisterMode($event)"
         ></app-register>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <header class="text-center mb-4"></header>
+
+  <div class="row justify-content-center">
+    <!-- Center the cards -->
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <img
+          src="https://via.placeholder.com/300"
+          class="card-img-top"
+          alt="Post Image"
+        />
+        <div class="card-body">
+          <h2 class="card-title">Title of a InPrompt Post</h2>
+          <p class="card-text">Content of the post goes here.</p>
+          <div class="card-subtitle text-muted small">
+            <span>Posted by: John Doe</span>
+            <span>2 hours ago</span>
+            <span>Comments: 10</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <img
+          src="https://via.placeholder.com/300"
+          class="card-img-top"
+          alt="Post Image"
+        />
+        <div class="card-body">
+          <h2 class="card-title">Title of Another InPrompt Post</h2>
+          <p class="card-text">Content of another post goes here.</p>
+          <div class="card-subtitle text-muted small">
+            <span>Posted by: Jane Smith</span>
+            <span>1 day ago</span>
+            <span>Comments: 5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more posts here -->
     </div>
   </div>
 </div>
