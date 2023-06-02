@@ -1,10 +1,25 @@
 import { Component } from '@angular/core';
+import { Member } from 'src/app/_models/member';
+import { MembersService } from 'src/app/_services/members.service';
 
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss']
+  styleUrls: ['./member-list.component.scss'],
 })
 export class MemberListComponent {
+  members: Member[] = [];
+  // members$: Observable<Member[]> | undefined;
+  constructor(private memberService: MembersService) {}
 
+  ngOnInit(): void {
+    // this.members$=this.memberService.getMembers();
+    this.loadMembers();
+  }
+
+  loadMembers() {
+    this.memberService.getMembers().subscribe({
+      next: (members) => (this.members = members)
+    });
+  }
 }

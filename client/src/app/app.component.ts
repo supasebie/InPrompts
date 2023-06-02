@@ -11,12 +11,9 @@ import { User } from './_models/user';
 export class AppComponent implements OnInit {
   title = 'InPrompts';
   users: any;
-  
 
-  constructor(
-    private http: HttpClient,
-    public accountService: AccountService
-  ) {}
+  constructor(private http: HttpClient, public accountService: AccountService) {
+  }
 
   ngOnInit(): void {
     this.setCurrentUser();
