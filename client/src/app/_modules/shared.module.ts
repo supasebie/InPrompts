@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgbDropdownModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -16,14 +17,16 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
       positionClass: 'toast-bottom-right',
     }),
     NgbNavModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
   ],
   exports: [
     NgbModule,
     NgbDropdownModule,
     ToastrModule,
     NgbNavModule,
-    NgxGalleryModule
+    NgxGalleryModule,
+    NgxSpinnerModule
   ]
 })
 export class SharedModule { }

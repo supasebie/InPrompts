@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { map, take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { MembersService } from 'src/app/_services/members.service';
+import { ToastrService } from 'ngx-toastr';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-member-edit',
@@ -11,13 +13,22 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-edit.component.scss'],
 })
 export class MemberEditComponent {
+  @ViewChild('editForm') editForm: NgForm | undefined;
+  @HostListener('window:beforeunload', ['$event']) unloadNotification(
+    $event: any
+  ) {
+    if (this.editForm?.dirty) {
+      $event.returnValue = true;
+    }
+  }
   member: Member | null = null;
   user: User | null = null;
   active: number = 1;
 
   constructor(
     private accountService: AccountService,
-    private memberService: MembersService
+    private memberService: MembersService,
+    private toastr: ToastrService
   ) {
     // You can avoid this by setting user | null and initializing to null
     // this.accountService.currentUser$.pipe(take(1)).subscribe({
@@ -46,7 +57,6 @@ export class MemberEditComponent {
         this.user = response;
       },
     });
-    
   }
 
   ngOnInit(): void {
@@ -59,8 +69,14 @@ export class MemberEditComponent {
     this.memberService.getMember(this.user.username).subscribe({
       next: (response) => {
         this.member = response;
-        console.log(this.member)
       },
     });
+  }
+
+  updateMember() {
+    this.memberService.updateMember(this.editForm?.value).subscribe({next: _ => {
+      this.toastr.success('Profile updated');
+      this.editForm?.reset(this.member);
+    }})
   }
 }

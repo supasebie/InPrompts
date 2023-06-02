@@ -1,54 +1,55 @@
-<div class="row" *ngIf="member">
-  <div class="col-4">
-    <h1>Your profile</h1>
-  </div>
-  <div class="col-8">
-    <div class="alert alert-info">
-      <p>
-        <strong
-          >Information: You have made changes, anything unsaved will be
-          lost</strong
-        >
-      </p>
+<form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+  <div class="row" *ngIf="member">
+    <div class="col-4">
+      <h1>Your profile</h1>
     </div>
-  </div>
-  <div class="col-4">
-    <div class="card">
-      <img
-        src="{{ member.photoUrl || './assets/user.png' }}"
-        alt="{{ member.knownAs }}"
-        class="card-img-top img-thumbnail"
-      />
-      <div class="card-body">
-        <div>
-          <strong>Location:</strong>
-          <p>{{ member.knownAs }}, {{ member.knownAs }}</p>
-        </div>
-        <div>
-          <strong>Age:</strong>
-          <p>{{ member.age }}</p>
-        </div>
-        <div>
-          <strong>Last active:</strong>
-          <p>{{ member.lastActive }}</p>
-        </div>
-        <div>
-          <strong>Member since::</strong>
-          <p>{{ member.created }}</p>
-        </div>
-      </div>
-      <div class="card-footer">
-        <button class="btn btn-success col-12">Save changes</button>
+    <div class="col-8">
+      <div class="alert alert-warning pb-0" *ngIf="editForm.dirty">
+        <p>
+          <strong
+            >Information: You have made changes, anything unsaved will be
+            lost</strong
+          >
+        </p>
       </div>
     </div>
-  </div>
-  <div class="col-8">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-      <li [ngbNavItem]="1">
-        <button ngbNavLink>About {{ member.knownAs }}</button>
-        <ng-template ngbNavContent>
-          <form>
-
+    <div class="col-4">
+      <div class="card">
+        <img
+          src="{{ member.photoUrl || './assets/user.png' }}"
+          alt="{{ member.knownAs }}"
+          class="card-img-top img-thumbnail"
+        />
+        <div class="card-body">
+          <div>
+            <strong>Location:</strong>
+            <p>{{ member.knownAs }}, {{ member.knownAs }}</p>
+          </div>
+          <div>
+            <strong>Age:</strong>
+            <p>{{ member.age }}</p>
+          </div>
+          <div>
+            <strong>Last active:</strong>
+            <p>{{ member.lastActive | date : "MM/dd/yyyy" }}</p>
+          </div>
+          <div>
+            <strong>Member since::</strong>
+            <p>{{ member.created | date : "MM/dd/yyyy" }}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button form="editForm" class="btn btn-success col-12" [disabled]="!editForm.dirty">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <button ngbNavLink>About {{ member.knownAs }}</button>
+          <ng-template ngbNavContent>
             <h4 class="mt-2">Description</h4>
             <textarea
               class="form-control"
@@ -76,40 +77,37 @@
             >
 
             <h4 class="mt-2">Location details:</h4>
-            <div class="d-flex flex-row align-items-center">
-                <label for="city">City:</label>
-                <input type="text" [(ngModel)]="member.city" name="city" class="mx-2">
-                <label for="city">Country:</label>
-                <!-- <input type="text" [(ngModel)]="member.country" name="city" class="mx-2"> -->
+            <div
+              class="d-flex flex-row align-items-center"
+              *ngIf="editForm.dirty"
+            >
+              <label for="city">City:</label>
+              <input
+                type="text"
+                [(ngModel)]="member.city"
+                name="city"
+                class="form-control mx-2"
+              />
+              <label for="city">Country:</label>
+              <input
+                type="text"
+                [(ngModel)]="member.country"
+                name="country"
+                class="form-control mx-2"
+              />
             </div>
-          </form>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="2">
-        <button ngbNavLink>Interests</button>
-        <ng-template ngbNavContent>
-          <h4>Interests</h4>
-          <p>{{ member.interests }}</p>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="3">
-        <button ngbNavLink>Photos</button>
-        <ng-template ngbNavContent>
-          <!-- <ngx-gallery
-            [options]="galleryOptions"
-            [images]="galleryImages"
-            class="ngx-gallery"
-          ></ngx-gallery> -->
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="4">
-        <button ngbNavLink>Messages</button>
-        <ng-template ngbNavContent>
-          <p>Messages</p>
-        </ng-template>
-      </li>
-    </ul>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <button ngbNavLink>Edit Photos</button>
+          <ng-template ngbNavContent>
+            <p>FINISH THIS SHIT FOO</p>
+          </ng-template>
+        </li>
+      </ul>
 
-    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      <!-- outlet -->
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div>
   </div>
-</div>
+</form>
