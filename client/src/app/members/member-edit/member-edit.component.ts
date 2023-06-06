@@ -30,6 +30,13 @@ export class MemberEditComponent {
     private memberService: MembersService,
     private toastr: ToastrService
   ) {
+    //Constructor action
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: (response) => {
+        this.user = response;
+      },
+    });
+
     // You can avoid this by setting user | null and initializing to null
     // this.accountService.currentUser$.pipe(take(1)).subscribe({
     //   next: (response) => {
@@ -51,12 +58,6 @@ export class MemberEditComponent {
     //     },
     //   });
     // }
-
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
-      next: (response) => {
-        this.user = response;
-      },
-    });
   }
 
   ngOnInit(): void {
@@ -74,9 +75,11 @@ export class MemberEditComponent {
   }
 
   updateMember() {
-    this.memberService.updateMember(this.editForm?.value).subscribe({next: _ => {
-      this.toastr.success('Profile updated');
-      this.editForm?.reset(this.member);
-    }})
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: (_) => {
+        this.toastr.success('Profile updated');
+        this.editForm?.reset(this.member);
+      },
+    });
   }
 }

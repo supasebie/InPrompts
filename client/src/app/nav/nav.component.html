@@ -31,12 +31,13 @@
     <div
       ngbDropdown
       class="dropdown"
-      *ngIf="accountService.currentUser$ | async"
+      *ngIf="(accountService.currentUser$ | async) as user"
     >
+    <img src="{{user.photoUrl || './assets/user.png'}}" alt="user photo">
       <a
         ngbDropdownToggle
         id="dropdownBasic1"
-        class="dropdown-toggle text-light text-decoration-none"
+        class="dropdown-toggle text-light text-decoration-none mx-1"
         >Welcome
         {{
           accountService.currentUser()?.username !== "undefined"

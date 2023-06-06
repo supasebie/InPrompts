@@ -4,6 +4,7 @@ import { NgbDropdownModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-boo
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
@@ -18,7 +19,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     }),
     NgbNavModule,
     NgxGalleryModule,
-    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    FileUploadModule
   ],
   exports: [
     NgbModule,
@@ -26,7 +28,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ToastrModule,
     NgbNavModule,
     NgxGalleryModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FileUploadModule
   ]
 })
 export class SharedModule { }

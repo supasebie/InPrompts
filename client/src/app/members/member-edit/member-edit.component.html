@@ -39,7 +39,11 @@
           </div>
         </div>
         <div class="card-footer">
-          <button form="editForm" class="btn btn-success col-12" [disabled]="!editForm.dirty">
+          <button
+            form="editForm"
+            class="btn btn-success col-12"
+            [disabled]="!editForm.dirty"
+          >
             Save changes
           </button>
         </div>
@@ -77,10 +81,7 @@
             >
 
             <h4 class="mt-2">Location details:</h4>
-            <div
-              class="d-flex flex-row align-items-center"
-              *ngIf="editForm.dirty"
-            >
+            <div class="d-flex flex-row align-items-center">
               <label for="city">City:</label>
               <input
                 type="text"
@@ -101,7 +102,7 @@
         <li [ngbNavItem]="2">
           <button ngbNavLink>Edit Photos</button>
           <ng-template ngbNavContent>
-            <p>FINISH THIS SHIT FOO</p>
+            <app-photo-editor [member]="member"></app-photo-editor>
           </ng-template>
         </li>
       </ul>
