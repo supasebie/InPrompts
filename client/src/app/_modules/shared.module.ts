@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbDropdownModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbDropdownModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -20,7 +20,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     NgbNavModule,
     NgxGalleryModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
-    FileUploadModule
+    FileUploadModule,
+    NgbDatepickerModule
   ],
   exports: [
     NgbModule,
@@ -29,7 +30,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     NgbNavModule,
     NgxGalleryModule,
     NgxSpinnerModule,
-    FileUploadModule
+    FileUploadModule,
+    NgbDatepickerModule
   ]
 })
 export class SharedModule { }
