@@ -41,7 +41,7 @@
         >Welcome
         {{
           accountService.currentUser()?.username !== "undefined"
-            ? (accountService.currentUser()?.username | titlecase)
+            ? (accountService.currentUser()?.knownAs | titlecase)
             : ""
         }}</a
       >

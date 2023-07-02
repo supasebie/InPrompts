@@ -3,6 +3,7 @@ using System.Security.Claims;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using AutoMapper.Execution;
@@ -28,9 +29,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var users = await _repo.GetMembersAsync();
+            var currentUser = await _repo.GetUserByUsernameAsync(User.GetUsername());
+
+            userParams.CurrentUsername = currentUser.UserName;
+            if (String.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+
+            var users = await _repo.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
 
             return Ok(users);
         }
@@ -108,7 +119,7 @@ namespace API.Controllers
         public async Task<ActionResult> DeletePhoto(int id)
         {
             var user = await _repo.GetUserByUsernameAsync(User.GetUsername());
-            
+
             if (user == null) return BadRequest("Invalid user");
 
             var photo = user.Photos.FirstOrDefault(x => x.Id == id);
@@ -136,7 +147,7 @@ namespace API.Controllers
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
             var user = await _repo.GetUserByUsernameAsync(User.GetUsername());
-            
+
             if (user == null) return BadRequest("Invalid user");
 
             var currentMain = user.Photos.FirstOrDefault(x => x.IsMain == true);
