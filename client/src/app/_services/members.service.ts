@@ -7,6 +7,7 @@ import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { AccountService } from './account.service';
 import { User } from '../_models/user';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class MembersService {
   user: User | undefined;
 
   constructor(private http: HttpClient, private accountService: AccountService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe({
+    this.accountService.currentUser$.pipe(takeUntilDestroyed()).subscribe({
       next: (user) => {
         if (user) {
           this.userParams = new UserParams(user);
@@ -27,22 +28,6 @@ export class MembersService {
         }
       },
     });
-  }
-
-  getUserParams() {
-    return this.userParams;
-  }
-
-  setUserParams(params: UserParams){
-    this.userParams = params;
-  }
-
-  resetUserParams() {
-    if(this.user){
-      this.userParams = new UserParams(this.user);
-      return this.userParams;
-    }
-    return;
   }
 
   getMembers(userParams: UserParams) {
@@ -95,12 +80,47 @@ export class MembersService {
     );
   }
 
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // PHOTO METHODS
+  ///////////////////////////////////////////////////////////////////////////////////////////
   setMain(photoId: number) {
     return this.http.put(this.baseUrl + 'users/set-main-photo/' + photoId, {});
   }
 
   deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'users/delete-photo/' + photoId);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // LIKE METHODS
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'likes/' + username, {})
+  }
+
+  getLikes(predicate: string, pageNumber: number, pageSize: number) {
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Member[]>(this.baseUrl+ 'likes', params);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  // PARAM METHODS
+  ///////////////////////////////////////////////////////////////////////////////////////////
+  getUserParams() {
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams){
+    this.userParams = params;
+  }
+
+  resetUserParams() {
+    if(this.user){
+      this.userParams = new UserParams(this.user);
+      return this.userParams;
+    }
+    return;
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////

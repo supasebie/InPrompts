@@ -1,15 +1,11 @@
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
-using AutoMapper.Execution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace API.Controllers
 {
