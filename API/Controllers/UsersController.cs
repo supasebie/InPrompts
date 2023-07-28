@@ -1,11 +1,11 @@
 using API.DTOs;
-using API.Entities;
-using API.Extensions;
-using API.Helpers;
-using API.Interfaces;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+using API.Helpers;
+using API.Entities;
+using API.Interfaces;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {

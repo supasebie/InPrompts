@@ -1,4 +1,4 @@
-<div class="row" *ngIf="member">
+<div class="row">
   <div class="col-4">
     <div class="card">
       <img
@@ -27,13 +27,13 @@
       <div class="card-footer">
         <div class="btn-group d-flex">
           <button class="btn btn-primary">Like</button>
-          <button class="btn btn-success">Message</button>
+          <button class="btn btn-success" (click)="selectTab(4)">Message</button>
         </div>
       </div>
     </div>
   </div>
   <div class="col-8">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <ul ngbNav #nav="ngbNav" (navChange)="onNavChange($event)" [(activeId)]="active" class="nav-tabs">
         <li [ngbNavItem]="1">
             <button ngbNavLink>About {{member.knownAs}}</button>
             <ng-template ngbNavContent>
@@ -59,7 +59,7 @@
         <li [ngbNavItem]="4">
             <button ngbNavLink>Messages</button>
             <ng-template ngbNavContent>
-                <p>Messages</p>
+                <app-member-messages [messages]="messages" [username]="member.userName"></app-member-messages>
             </ng-template>
         </li>
     </ul>

@@ -12,8 +12,10 @@ export class AppComponent implements OnInit {
   title = 'InPrompts';
   users: any;
 
-  constructor(private http: HttpClient, public accountService: AccountService) {
-  }
+  constructor(
+    private http: HttpClient,
+    public accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.setCurrentUser();
@@ -22,7 +24,6 @@ export class AppComponent implements OnInit {
   getUsers() {
     this.http.get('https://localhost:5001/api/users').subscribe({
       next: (response) => (this.users = response),
-      error: (error) => console.log(error)
     });
   }
 

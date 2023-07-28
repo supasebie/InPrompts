@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   NgxGalleryAnimation,
   NgxGalleryImage,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+import {
+  NgbNav,
+  NgbNavChangeEvent,
+  NgbNavOutlet,
+} from '@ng-bootstrap/ng-bootstrap';
 import { Member } from 'src/app/_models/member';
+import { Message } from 'src/app/_models/message';
 import { MembersService } from 'src/app/_services/members.service';
+import { MessageService } from 'src/app/_services/message.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -14,18 +21,24 @@ import { MembersService } from 'src/app/_services/members.service';
   styleUrls: ['./member-detail.component.scss'],
 })
 export class MemberDetailComponent {
-  member: Member | undefined;
+  messages: Message[] = [];
+  member: Member = {} as Member;
   active: number = 1;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
+  @ViewChild('nav', {static: true})  nav?: NgbNav;
+
 
   constructor(
     private memberService: MembersService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    this.loadMember();
+    this.route.data.subscribe({next: (data) => {
+      this.member = data['member'];
+    }});
 
     this.galleryOptions = [
       {
@@ -37,7 +50,22 @@ export class MemberDetailComponent {
         preview: false,
       },
     ];
+    this.galleryImages = this.getImages();
+
+    this.route.queryParams.subscribe((params) => {
+          const tab = params['tab'] ? +params['tab'] : 1;
+          this.selectTab(tab);
+        });
   }
+
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     this.route.queryParams.subscribe((params) => {
+  //       const tab = params['tab'] ? +params['tab'] : 1;
+  //       this.selectTab(tab);
+  //     });
+  //   });
+  // }
 
   loadMember() {
     const username = this.route.snapshot.paramMap.get('username');
@@ -62,5 +90,25 @@ export class MemberDetailComponent {
       });
     }
     return imageUrls;
+  }
+
+  onNavChange(changeEvent: NgbNavChangeEvent) {
+    if (changeEvent.nextId === 4) {
+      if (this.member) this.loadMessages(this.member.userName);
+    }
+  }
+
+  loadMessages(username: string) {
+    if (this.member)
+      this.messageService.getMessageThread(username).subscribe({
+        next: (response) => {
+          this.messages = response;
+        },
+      });
+  }
+
+  selectTab(int: number) {
+    if (this.member) this.loadMessages(this.member?.userName);
+    this.nav?.select(int);
   }
 }

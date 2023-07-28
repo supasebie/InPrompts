@@ -1,0 +1,126 @@
+  <!-- <div class="mb-4 d-flex justify-content-center">
+ <div class="btn-group" name="container" role="group">
+    <input
+      type="radio"
+      class="btn btn-primary"
+      [(ngModel)]="container"
+      value="Unread"
+      class="btn-check"
+      id="btnradio1"
+      (ngModelChange)="loadMessages()"
+    />
+    <label class="btn btn-outline-primary" for="btnradio1"
+      ><i class="fa fa-envelope"></i> Unread</label
+    >
+
+    <input
+      type="radio"
+      class="btn btn-primary"
+      [(ngModel)]="container"
+      value="Inbox"
+      id="btnradio2"
+      class="btn-check"
+      (ngModelChange)="loadMessages()"
+    />
+    <label class="btn btn-outline-primary" for="btnradio2"
+      ><i class="fa fa-envelope-open"></i> Inbox</label
+    >
+
+    <input
+      type="radio"
+      class="btn btn-primary"
+      [(ngModel)]="container"
+      value="Outbox"
+      id="btnradio3"
+      class="btn-check"
+      (ngModelChange)="loadMessages()"
+    />
+    <label class="btn btn-outline-primary" for="btnradio3"
+      ><i class="fa fa-paper-plane"></i> Sent</label
+    >
+  </div>
+</div> -->
+<!-- <div class="container" *ngIf="messages?.length == 0">
+  <h1>No new messages</h1>
+</div>
+
+<div *ngIf="messages">
+  <div class="container" *ngIf="messages.length > 0">
+    <table class="table table-striped" style="cursor: pointer">
+      <thead>
+        <tr>
+          <th>From/To</th>
+          <th>Date Sent</th>
+          <th>Content</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of messages">
+          <td>
+            <img
+              class="img-circle rounded-circle me-2"
+              src="{{ message.senderPhotoUrl }}"
+              alt="{{ message.senderUsername }}"
+              width="50"
+              height="50"
+            />
+            <img
+              class="img-circle rounded-circle me-2"
+              src="{{ message.recipientPhotoUrl }}"
+              alt="{{ message.recipientUsername }}"
+              width="50"
+              height="50"
+            />
+          </td>
+          <td>{{ message.dateSent | timeago }}</td>
+          <td>{{ message.content }}</td>
+          <td><button class="btn btn-danger">Delete</button></td>
+        </tr>
+      </tbody>
+    </table> -->
+    <!-- <div class="d-flex justify-content-center">
+          <ngb-pagination
+            ngDefaultControl
+            *ngIf="pagination"
+            (pageChange)="pageChanged($event)"
+            [collectionSize]="pagination.totalItems"
+            [pageSize]="pagination.itemsPerPage"
+            [(page)]="pagination.currentPage"
+            [maxSize]="10"
+            [(ngModel)]="pagination.currentPage"
+          ></ngb-pagination>
+        </div> -->
+  <!-- </div>
+</div> -->
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="messages.length === 0">No new messages</div>
+    <ul *ngIf="messages.length > 0" class="chat">
+      <li *ngFor="let message of messages">
+        <div><span class="chat-img float-end">
+          <img class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}" alt="image of user">
+        </span>
+      <div class="chat-body">
+        <div class="header">
+          <small class="text-muted">
+            <span class="fa fa-clock-o">{{message.dateSent + 'Z' | timeago }}</span>
+            <span class="text-danger" *ngIf="!message.dateRead && message.senderUsername !== username"> (unread)</span>
+            <span class="text-success" *ngIf="message.dateRead && message.senderUsername !== username"> (read {{message.dateRead + 'Z' | timeago}})</span>
+          </small>
+        </div>
+        <p>{{message.content}}</p>
+      </div>
+      </div>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+      <div class="input-group">
+        <input required name="messageContent" [(ngModel)]="messageContent" type="text" class="form-control input-sm" placeholder="Send private message">
+        <div class="input-group-append"><button [disabled]="!messageForm.valid" class="btn btn-primary">Send</button></div>
+      </div>
+    </form>
+  </div>
+</div>

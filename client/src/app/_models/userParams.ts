@@ -8,6 +8,7 @@ export class UserParams {
   pageSize = 5;
   orderBy = 'lastActive';
   predicate = 'likedBy'
+  container = "inbox"
 
   constructor(user: User) {
     this.gender = user.gender == 'female' ? 'male' : 'female';
