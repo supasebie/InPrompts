@@ -24,6 +24,7 @@ namespace API.Controllers
             _repo = repo;
         }
 
+        // [Authorize(Roles = "Member")]
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {

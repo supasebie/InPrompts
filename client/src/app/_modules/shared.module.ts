@@ -21,7 +21,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     NgxGalleryModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     FileUploadModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
   ],
   exports: [
     NgbModule,
