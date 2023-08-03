@@ -49,11 +49,7 @@
         id="dropdownBasic1"
         class="dropdown-toggle text-light text-decoration-none mx-1"
         >Welcome
-        {{
-          accountService.currentUser()?.username !== "undefined"
-            ? (accountService.currentUser()?.knownAs | titlecase)
-            : ""
-        }}</a
+        {{user.knownAs}}</a
       >
       <div class="dropdown-menu" ngbDropdownMenu>
         <div class="dropdown-item" routerLink="/member/edit">Edit Profile</div>

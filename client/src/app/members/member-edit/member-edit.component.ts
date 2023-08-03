@@ -1,5 +1,5 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { map, take } from 'rxjs';
+import { take } from 'rxjs';
 import { Member } from 'src/app/_models/member';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
@@ -42,7 +42,6 @@ export class MemberEditComponent {
     //   next: (response) => {
     //     if (response) {
     //       this.user = response;
-    //       console.log(this.user);
     //     }
     //   },
     // });
@@ -53,7 +52,6 @@ export class MemberEditComponent {
     //     next: (response) => {
     //       if (response) {
     //         this.member = response;
-    //         console.log(this.member);
     //       }
     //     },
     //   });

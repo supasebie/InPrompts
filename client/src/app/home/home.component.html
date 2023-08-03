@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div
     style="text-align: center"
-    *ngIf="!registerMode && accountService.currentUser()?.username == undefined"
+    *ngIf="!registerMode && (accountService.currentUser$ | async)?.username == undefined"
   >
     <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
       Register

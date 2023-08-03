@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdminService } from 'src/app/_services/admin.service';
 
@@ -32,10 +32,4 @@ export class RoleModalComponent {
       }
     }})
   }
-
-  // private arrayCheck(arr1: [], arr2: [])
-  // {
-  //   let res = JSON.stringify(arr1.sort()) == JSON.stringify(arr2.sort())
-  //   console.log(res)
-  // }
 }
